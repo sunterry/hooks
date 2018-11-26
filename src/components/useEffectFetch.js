@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
+/**
+ * @description useEffect第一个参数不接受 async关键字 在16.7.0-alpha.2 版本中
+ * @description {
+ *   https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30551
+ *   https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret
+ * }
+ * @param url
+ * @param count
+ * @returns {{data, loading}}
+ */
 const getFetchUser = (url, count) => {
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(true);
