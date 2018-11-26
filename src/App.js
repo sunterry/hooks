@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UseStateHooks from './components/useStateHooks';
 import UseEffectHooks from './components/useEffectHooks';
+import UseEffectFetch from './components/useEffectFetch';
 import TodoList from './layout/todoList';
 import './App.css';
 
@@ -11,6 +12,7 @@ class App extends Component {
 	      <UseStateHooks />
 	      <UseEffectHooks />
 	      <TodoList />
+	      <UseEffectFetch />
       </div>
     );
   }
