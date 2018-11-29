@@ -1,8 +1,25 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useReducer } from 'react';
 import UseCustom from './../components/useCustom';
 
+const todosReducer = (todos, action) => {
+	switch (action.type) {
+		case "ADD_TODO":
+			return [{ text: action.text, complete: false }, ...todos];
+		case "TOGGLE_COMPLETE":
+			return todos.map((todo, k) => k === action.i ? {
+				...todo,
+				complete: !todo.complete
+			} : todo)
+		case "RESET":
+			return [];
+		default:
+			return todos;
+	}
+};
+
 const TodoList = () => {
-	const [todos, setTodos] = useState([]);
+	// const [todos, setTodos] = useState([]);
+	const [todos, dispatch] = useReducer([]);
 
 	const toggleComplete = (i) => {
 		setTodos(todos.map((item, k) => {
