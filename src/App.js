@@ -5,6 +5,7 @@ import UseEffectFetch from './components/useEffectFetch';
 import UseEffectUnmount from './components/useEffectUnmount';
 import UseCallback from './components/useCallback';
 import MemoDemo from './layout/useMemo';
+import TodoListUserReducers from './layout/todoListUseReducer';
 import TodoList from './layout/todoList';
 import './App.css';
 
@@ -19,6 +20,7 @@ class App extends Component {
 	      <UseEffectUnmount />
 	      <MemoDemo />
 	      <UseCallback />
+	      <TodoListUserReducers/>
       </div>
     );
   }

@@ -1,15 +1,14 @@
-import React, { useState, useCallback, useReducer } from 'react';
+import React, {  useReducer } from 'react';
 import UseCustom from './../components/useCustom';
+import produce  from 'immer';
+import { useImmerReducer } from 'use-immer';
 
 const todosReducer = (todos, action) => {
 	switch (action.type) {
 		case "ADD_TODO":
-			return [{ text: action.text, complete: false }, ...todos];
+			return todos.push({ text: action.text, complete: false })
 		case "TOGGLE_COMPLETE":
-			return todos.map((todo, k) => k === action.i ? {
-				...todo,
-				complete: !todo.complete
-			} : todo)
+			return todos[action.i].complete = !todos[action.i].complete;
 		case "RESET":
 			return [];
 		default:
@@ -18,37 +17,36 @@ const todosReducer = (todos, action) => {
 };
 
 const TodoList = () => {
-	// const [todos, setTodos] = useState([]);
-	const [todos, dispatch] = useReducer([]);
+	const [todos, dispatch] = useImmerReducer(todosReducer, []);
 
-	const toggleComplete = (i) => {
-		setTodos(todos.map((item, k) => {
-			return k === i ? {
-				...item,
-				complete: !item.complete,
-			} : item ;
-		}))
-	};
+	// const toggleComplete = (i) => {
+	// 	setTodos(todos.map((item, k) => {
+	// 		return k === i ? {
+	// 			...item,
+	// 			complete: !item.complete,
+	// 		} : item ;
+	// 	}))
+	// };
 
-	const onSubmit = useCallback(
-		text => setTodos([{ text, complete: false }, ...todos]),
-		[todos]
-	);
+	// const onSubmit = useCallback(
+	// 	text => setTodos([{ text, complete: false }, ...todos]),
+	// 	[todos]
+	// );
 
 	return (
 		<div>
-			<UseCustom onSubmit={ onSubmit } />
+			<UseCustom dispatch={ dispatch } />
 			{
 				todos.map(({ text, complete }, i) => (
 					<div
-						onClick={ () => toggleComplete(i)} key={i}
+						onClick={ () => dispatch({type: 'TOGGLE_COMPLETE', i})} key={i}
 						style={{ textDecoration: complete? 'line-through' : '' }}
 					>
 						{ text }
 					</div>
 				))
 			}
-			<button onClick={ () => setTodos([])}>清空</button>
+			<button onClick={ () => dispatch({type: 'RESET'})}>清空</button>
 		</div>
 	)
 };
